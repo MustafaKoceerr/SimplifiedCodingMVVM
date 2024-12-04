@@ -1,13 +1,18 @@
-package com.kocerlabs.simplifiedcodingmvvm.network
+package com.kocerlabs.simplifiedcodingmvvm.data.network
 
 import okhttp3.ResponseBody
 
 sealed class Resource<out T> { // subClass'lardan return type olarak covariant almak için sealed class'ta da <out T> tanımladım.
     // out T'yi sadece Resource sınıfında tanımlayarak, türetilmiş sınıflar (Success, Error, vb.) bu parametreyi otomatik olarak miras alır.
     data class Success<out T>(val value: T) : Resource<T>()
-    data class Failure<out T>(val isNetworkError: Boolean, val errorCode: Int?,
-        val errorBody:ResponseBody?) : Resource<T>()
 
+    data class Failure<out T>(
+        val isNetworkError: Boolean,
+        val errorCode: Int?,
+        val errorBody: ResponseBody?
+    ) : Resource<Nothing>()
+
+    data object Loading: Resource<Nothing>()
 }
 
 
