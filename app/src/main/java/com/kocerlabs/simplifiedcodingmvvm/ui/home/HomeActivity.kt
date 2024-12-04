@@ -1,10 +1,11 @@
-package com.kocerlabs.simplifiedcodingmvvm
+package com.kocerlabs.simplifiedcodingmvvm.ui.home
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.kocerlabs.simplifiedcodingmvvm.R
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
