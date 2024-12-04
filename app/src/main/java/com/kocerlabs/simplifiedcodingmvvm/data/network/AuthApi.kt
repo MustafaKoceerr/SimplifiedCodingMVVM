@@ -1,7 +1,7 @@
-package com.kocerlabs.simplifiedcodingmvvm.network
+package com.kocerlabs.simplifiedcodingmvvm.data.network
 
-import com.kocerlabs.simplifiedcodingmvvm.network.model.LoginRequest
-import com.kocerlabs.simplifiedcodingmvvm.network.model.LoginResponse
+import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginRequest
+import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginResponse
 import retrofit2.http.Body
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
