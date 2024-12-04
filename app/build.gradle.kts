@@ -40,6 +40,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -99,10 +100,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
 
-    // DATASTORE
+    // DATASTORE Preferences  -> We can store Key-Value pairs
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     // Proto Datastore
-    implementation("androidx.datastore:datastore-preferences-core:1.1.1")
+//    implementation("androidx.datastore:datastore-preferences-core:1.1.1")
 
 
     // HILT
@@ -113,5 +114,8 @@ dependencies {
 
     // KOTLIN COROUTINES
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+    // OKHTTP Interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }
