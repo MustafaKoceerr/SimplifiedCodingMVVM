@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/rootAuth"
     android:layout_height="match_parent"
-    tools:context=".AuthActivity">
+    tools:context=".ui.auth.AuthActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
