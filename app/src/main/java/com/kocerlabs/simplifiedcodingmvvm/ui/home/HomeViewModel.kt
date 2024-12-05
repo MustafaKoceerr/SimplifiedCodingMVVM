@@ -11,11 +11,12 @@ import com.kocerlabs.simplifiedcodingmvvm.MyApplication
 import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginResponseSecond
 import com.kocerlabs.simplifiedcodingmvvm.data.repository.UserRepository
+import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val repository: UserRepository
-) : ViewModel() {
+) : BaseViewModel(repository) {
 
     private val _user: MutableLiveData<Resource<LoginResponseSecond>> = MutableLiveData()
     val user: LiveData<Resource<LoginResponseSecond>>

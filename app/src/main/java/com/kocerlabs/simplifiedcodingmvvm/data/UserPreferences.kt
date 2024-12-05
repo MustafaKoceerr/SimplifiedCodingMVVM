@@ -2,6 +2,7 @@ package com.kocerlabs.simplifiedcodingmvvm.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -36,5 +37,11 @@ class UserPreferences(
         // At the top level of your kotlin file:
         val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
         private val KEY_AUTH = stringPreferencesKey("my_data_store")
+    }
+
+    suspend fun clear(){
+        applicationContext.dataStore.edit { preferences->
+            preferences.clear()
+        }
     }
 }

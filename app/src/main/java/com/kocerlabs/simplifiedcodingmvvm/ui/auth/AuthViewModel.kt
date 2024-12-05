@@ -12,11 +12,12 @@ import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginRequest
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginResponse
 import com.kocerlabs.simplifiedcodingmvvm.data.repository.AuthRepository
+import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val repository: AuthRepository,
-) : ViewModel() {
+) : BaseViewModel(repository) {
     private val _loginResponse = MutableLiveData<Resource<LoginResponse>>() // Replace ResponseType with your actual data type.
     val loginResponse: LiveData<Resource<LoginResponse>> = _loginResponse // Publicly exposed as LiveData for observers.
 
@@ -27,9 +28,7 @@ class AuthViewModel(
         }
 
 
-    fun saveAuthToken(token:String) = viewModelScope.launch {
-        repository.saveAuthToken(token)
-    }
+    suspend fun saveAuthToken(token:String) = repository.saveAuthToken(token)
 
 
     // Define ViewModel factory in a companion object
