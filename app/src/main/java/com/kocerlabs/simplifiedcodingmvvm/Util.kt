@@ -10,11 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
 import com.kocerlabs.simplifiedcodingmvvm.ui.auth.LoginFragment
-import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseFragment
 
-fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, message, duration).show()
-}
 
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
@@ -49,8 +45,6 @@ fun Fragment.handleApiError(
         failure.errorCode == 401 -> {
             if (this is LoginFragment) {
                 requireView().snackbar("You've entered incorrect email or password", retry)
-            } else {
-                (this as BaseFragment<*, *, *>).logout()
             }
         }
 
