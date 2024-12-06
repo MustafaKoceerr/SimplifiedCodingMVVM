@@ -2,22 +2,19 @@ package com.kocerlabs.simplifiedcodingmvvm.ui.auth
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.kocerlabs.simplifiedcodingmvvm.databinding.FragmentRegisterBinding
-import com.kocerlabs.simplifiedcodingmvvm.data.network.AuthApi
-import com.kocerlabs.simplifiedcodingmvvm.data.repository.AuthRepository
 import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, AuthRepository>() {
-    override fun getViewModel(): Class<AuthViewModel> = AuthViewModel::class.java
-
+@AndroidEntryPoint
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
+    private val viewModel: AuthViewModel by viewModels()
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentRegisterBinding = FragmentRegisterBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository(): AuthRepository =
-        AuthRepository(remoteDataSource.buildApi(AuthApi::class.java), userPreferences)
-
+    ): FragmentRegisterBinding {
+        return FragmentRegisterBinding.inflate(inflater, container, false)
+    }
 
 }

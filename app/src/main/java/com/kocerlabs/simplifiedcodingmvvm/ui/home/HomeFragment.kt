@@ -7,33 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
-import com.kocerlabs.simplifiedcodingmvvm.data.network.UserApi
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginResponseSecond
-import com.kocerlabs.simplifiedcodingmvvm.data.repository.UserRepository
 import com.kocerlabs.simplifiedcodingmvvm.databinding.FragmentHomeBinding
 import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseFragment
 import com.kocerlabs.simplifiedcodingmvvm.visible
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserRepository>() {
-    val viewModel: HomeViewModel by viewModels { HomeViewModel.Factory }
+@AndroidEntryPoint
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    private val TAG = "HomeFragment"
+    private val viewModel: HomeViewModel by viewModels()
 
-
-    override fun getViewModel(): Class<HomeViewModel> = HomeViewModel::class.java
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository(): UserRepository {
-
-        val token = runBlocking { userPreferences.authToken.first() }
-        // Base Fragment'ta first() ile bir kere topladık, runblocking içinde o değere direkt erişecek. First ile bir kere toplarsan,
-        // bir daha erişirken toplamayacak.
-        return UserRepository(remoteDataSource.buildApi(UserApi::class.java, token))
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

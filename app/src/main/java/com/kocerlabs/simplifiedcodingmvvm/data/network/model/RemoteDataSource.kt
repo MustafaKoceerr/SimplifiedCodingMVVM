@@ -5,8 +5,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class RemoteDataSource {
+class RemoteDataSource @Inject constructor() {
 
     companion object {
         private const val BASE_URL = "https://dummyjson.com/"
@@ -37,5 +38,26 @@ class RemoteDataSource {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(api)
+    }
+
+    fun <Api> buildApiWithClient(
+        api: Class<Api>,
+        client: OkHttpClient? = null
+    ): Api { // retrofit nesnesini yaratacak olan generic fonksiyon
+        return if (client == null) {
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(api)
+        } else {
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(api)
+        }
+
     }
 }

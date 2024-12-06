@@ -9,18 +9,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kocerlabs.simplifiedcodingmvvm.data.UserPreferences
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.RemoteDataSource
-import com.kocerlabs.simplifiedcodingmvvm.data.repository.BaseRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // Data binding, view model'e ihtiyacımız var.
-abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseRepository> : Fragment() {
+abstract class BaseFragment<B : ViewBinding> : Fragment() {
 // Buradaki abstract fonksiyonları kullanarak, gerçek fragment'a geçince ihtiyacımız olan class'ları verecekler.
 
-    protected lateinit var userPreferences: UserPreferences
+    @Inject
+    lateinit var userPreferences: UserPreferences
 
     protected lateinit var binding: B
-    protected val remoteDataSource = RemoteDataSource()
+
+    @Inject
+    lateinit var remoteDataSource: RemoteDataSource
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,14 +40,11 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseReposit
         return binding.root
     }
 
-    abstract fun getViewModel(): Class<VM>
 
     abstract fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
     ): B
-
-    abstract fun getFragmentRepository(): R
 
 
 }
