@@ -1,6 +1,7 @@
 package com.kocerlabs.simplifiedcodingmvvm
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +13,7 @@ import com.kocerlabs.simplifiedcodingmvvm.ui.auth.AuthActivity
 import com.kocerlabs.simplifiedcodingmvvm.ui.home.HomeActivity
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         val userPreferences = UserPreferences(this)
         userPreferences.authToken.asLiveData().observe(this, Observer {
+            Log.d(TAG,"İT: $it")
             val activity =
                 if (it.isNotBlank() && it.isNotEmpty()) HomeActivity::class.java else AuthActivity::class.java
             startNewActivity(activity)

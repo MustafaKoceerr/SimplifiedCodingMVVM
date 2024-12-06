@@ -8,9 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.kocerlabs.simplifiedcodingmvvm.data.network.AuthApi
 import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
-import com.kocerlabs.simplifiedcodingmvvm.data.repository.AuthRepository
 import com.kocerlabs.simplifiedcodingmvvm.databinding.FragmentLoginBinding
 import com.kocerlabs.simplifiedcodingmvvm.enable
 import com.kocerlabs.simplifiedcodingmvvm.handleApiError
@@ -18,23 +16,20 @@ import com.kocerlabs.simplifiedcodingmvvm.startNewActivity
 import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseFragment
 import com.kocerlabs.simplifiedcodingmvvm.ui.home.HomeActivity
 import com.kocerlabs.simplifiedcodingmvvm.visible
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
-    override fun getViewModel(): Class<AuthViewModel> = AuthViewModel::class.java
-
-    val viewModel: AuthViewModel by viewModels { AuthViewModel.Factory }
-
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentLoginBinding = FragmentLoginBinding.inflate(inflater, container, false)
-
-
-    override fun getFragmentRepository(): AuthRepository =
-        AuthRepository(remoteDataSource.buildApi(AuthApi::class.java), userPreferences)
+    ): FragmentLoginBinding {
+        return FragmentLoginBinding.inflate(inflater, container, false)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,8 +91,8 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                     }
                 }
             })
-
-
         }
     }
+
+
 }

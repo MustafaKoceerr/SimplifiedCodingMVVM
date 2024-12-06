@@ -1,11 +1,9 @@
 package com.kocerlabs.simplifiedcodingmvvm.data.repository
 
-import com.kocerlabs.simplifiedcodingmvvm.data.UserPreferences
-import com.kocerlabs.simplifiedcodingmvvm.data.network.AuthApi
 import com.kocerlabs.simplifiedcodingmvvm.data.network.UserApi
-import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginRequest
+import javax.inject.Inject
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val api: UserApi,
 ) : BaseRepository() {
 

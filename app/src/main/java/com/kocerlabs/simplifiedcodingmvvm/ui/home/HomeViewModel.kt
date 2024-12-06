@@ -2,19 +2,17 @@ package com.kocerlabs.simplifiedcodingmvvm.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.kocerlabs.simplifiedcodingmvvm.MyApplication
 import com.kocerlabs.simplifiedcodingmvvm.data.network.Resource
 import com.kocerlabs.simplifiedcodingmvvm.data.network.model.LoginResponseSecond
 import com.kocerlabs.simplifiedcodingmvvm.data.repository.UserRepository
 import com.kocerlabs.simplifiedcodingmvvm.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val repository: UserRepository
 ) : BaseViewModel(repository) {
 
@@ -26,25 +24,6 @@ class HomeViewModel(
     fun getUser() = viewModelScope.launch {
         _user.value = Resource.Loading
         _user.value = repository.getUser()
-
     }
 
-    // Define ViewModel factory in a companion object
-    companion object {
-
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras,
-            ): T {
-                val application = checkNotNull(
-                    extras[APPLICATION_KEY]
-                )
-                return HomeViewModel(
-                    (application as MyApplication).userRepository
-                ) as T
-            }
-        }
-    }
 }

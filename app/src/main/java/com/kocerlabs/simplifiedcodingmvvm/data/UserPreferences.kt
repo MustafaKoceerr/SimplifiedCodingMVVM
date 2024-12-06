@@ -2,19 +2,19 @@ package com.kocerlabs.simplifiedcodingmvvm.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
-class UserPreferences(
-    context: Context
+class UserPreferences @Inject constructor(
+    @ApplicationContext private val context: Context
 ) {
-    private val applicationContext = context.applicationContext
 
     // create datastore Instance
 
@@ -23,12 +23,12 @@ class UserPreferences(
     // bu yüzden değeri getirmek için flow'a ihtiyacımız var
 
     val authToken: Flow<String>
-        get() = applicationContext.dataStore.data.map { preferences ->
+        get() = context.dataStore.data.map { preferences ->
             preferences[KEY_AUTH] ?: ""
         }
 
     suspend fun saveAuthToken(authToken: String) {
-        applicationContext.dataStore.edit { preferences ->
+        context.dataStore.edit { preferences ->
             preferences[KEY_AUTH] = authToken
         }
     }
@@ -39,8 +39,8 @@ class UserPreferences(
         private val KEY_AUTH = stringPreferencesKey("my_data_store")
     }
 
-    suspend fun clear(){
-        applicationContext.dataStore.edit { preferences->
+    suspend fun clear() {
+        context.dataStore.edit { preferences ->
             preferences.clear()
         }
     }
